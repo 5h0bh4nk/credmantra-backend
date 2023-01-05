@@ -7,8 +7,8 @@ var mongoose = require("mongoose");
 
 require("dotenv").config();
 
-const { PORT, MONGODB_URI, NODE_ENV,ORIGIN } = require("./config");
-const { API_ENDPOINT_NOT_FOUND_ERR, SERVER_ERR } = require("./errors");
+const { MONGODB_URI } = require("./config");
+const { SERVER_ERR, API_INITIALS } = require("./errors");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -22,9 +22,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/auth', authRouter);
+app.use(API_INITIALS + '/', indexRouter);
+app.use(API_INITIALS + '/users', usersRouter);
+app.use(API_INITIALS + '/auth', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
