@@ -48,3 +48,6 @@ Thumbs.db
 *.mov
 *.wmv
 
+# private files
+.env
+yarn.lock
