@@ -115,7 +115,7 @@ exports.loginWithPhoneOtp = async (req, res, next) => {
 
     res.status(201).json({
       type: "success",
-      message: "OTP sended to your registered phone number",
+      message: "OTP sent to your registered phone number",
       data: {
         userId: user._id,
       },

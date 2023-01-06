@@ -20,9 +20,9 @@ router.get("/", function (req, res, next) {
 
 router.post("/", get_auth);
 
-router.post("/verify", verifyPhoneOtp);
+router.post("/verify_otp", verifyPhoneOtp);
 
-router.get("/me", checkAuth, fetchCurrentUser);
+router.get("/verify_user", checkAuth, fetchCurrentUser);
 
 router.get("/admin", checkAuth, checkAdmin, handleAdmin);
 

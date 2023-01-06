@@ -7,8 +7,8 @@ var mongoose = require("mongoose");
 
 require("dotenv").config();
 
-const { MONGODB_URI } = require("./config");
-const { SERVER_ERR, API_INITIALS } = require("./errors");
+const { MONGODB_URI, API_INITIALS } = require("./config");
+const { SERVER_ERR } = require("./errors");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
