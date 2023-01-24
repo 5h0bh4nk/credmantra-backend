@@ -42,3 +42,44 @@
 | Header | Authorization : Bearer JWTToken  |
 
 </li>
+
+<br>
+<br>
+
+# Structure of .env file 
+
+```
+PORT = 4000
+MONGODB_URI=mongodb+srv://username:password@cluster0.uws21.mongodb.net/test
+NODE_ENV = development
+
+JWT_SECRET = YOUR_SECRET
+ORIGIN = http://localhost:3000
+
+ADMIN_PHONE = TAKE_FROM_TWILIO
+
+TWILIO_ACCOUNT_SID = TAKE_FROM_TWILIO
+TWILIO_AUTH_TOKEN = TAKE_FROM_TWILIO
+TWILIO_MESSAGE_SERVICE_SID = TAKE_FROM_TWILIO
+TWILIO_PHONE = TAKE_FROM_TWILIO
+
+```
+
+<br>
+<br>
+
+# Steps to run server 
+
+<li> Create a mongoDB account and take URL from there . </li>
+<li> Create twilio account and add detqails to .env file </li>
+<li> Add .env file to the main folder </li>
+<li> Run 
+
+```
+npm install
+npm start
+```
+
+</li>
+
+
