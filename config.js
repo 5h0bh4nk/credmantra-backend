@@ -12,4 +12,4 @@ exports.TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
 exports.TWILIO_PHONE = process.env.TWILIO_PHONE;
 exports.TWILIO_MESSAGE_SERVICE_SID = process.env.TWILIO_MESSAGE_SERVICE_SID;
 
-exports.API_INITIALS = '/api/v1';
+exports.API_VERSION = '/v1';

@@ -5,7 +5,7 @@ const checkAuth = require("../middlewares/checkAuth");
 const checkAdmin = require("../middlewares/checkAdmin");
 const {
   fetchCurrentUser,
-  loginWithPhoneOtp,
+  resendOtp,
   get_auth,
   verifyPhoneOtp,
   handleAdmin
@@ -20,10 +20,13 @@ router.get("/", function (req, res, next) {
 
 router.post("/", get_auth);
 
-router.post("/verify_otp", verifyPhoneOtp);
+router.post("/resend-otp", resendOtp);
 
-router.get("/verify_user", checkAuth, fetchCurrentUser);
+router.post("/verify-otp", verifyPhoneOtp);
+
+router.get("/verify-user", checkAuth, fetchCurrentUser);
 
 router.get("/admin", checkAuth, checkAdmin, handleAdmin);
 
 module.exports = router;
+

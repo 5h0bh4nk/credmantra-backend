@@ -68,6 +68,7 @@ exports.createNewUser = async (req, res, next) => {
 
 // ---------------------- get auth for any user ------------------------
 exports.get_auth = async (req, res, next) => {
+  // console.log(req.body);
   try {
     const { phone } = req.body;
 
@@ -78,6 +79,7 @@ exports.get_auth = async (req, res, next) => {
     }
     else{
       // login user
+      // console.log(req.body);
       await this.loginWithPhoneOtp(req, res, next);
     }
   } catch (error) {
@@ -96,6 +98,8 @@ exports.loginWithPhoneOtp = async (req, res, next) => {
       next({ status: 400, message: PHONE_NOT_FOUND_ERR });
       return;
     }
+
+    // console.log(req.body);
 
     // generate otp
     const otp = generateOTP(OTP_LENGTH);
@@ -121,6 +125,46 @@ exports.loginWithPhoneOtp = async (req, res, next) => {
       },
     });
   } catch (error) {
+    console.log(error);
+    next({message: error.message, status: 500});
+  }
+};
+
+// ----------------------- resend otp ------------------------------
+exports.resendOtp = async (req, res, next) => {
+  try {
+    const { phone } = req.body;
+    const user
+      = await User.findOne({ phone });
+    
+    if (!user) {
+      next({ status: 400, message: PHONE_NOT_FOUND_ERR });
+      return;
+    }
+
+    // generate otp
+    const otp = generateOTP(OTP_LENGTH);
+    // save otp to user collection
+    user.phoneOtp = otp;
+    user.phoneOtpExpire = Date.now() + EXPIRATION_TIME;
+    await user.save();
+    // send otp to phone number
+    await fast2sms(
+      {
+        message: `Your OTP is ${otp}`,
+        contactNumber: user.phone,
+      },
+      next
+    );
+    
+    res.status(201).json({
+      type: "success",
+      message: "OTP sent to your registered phone number",
+      data: {
+        userId: user._id,
+      },
+    });
+  } catch (error) {
     next({message: error.message, status: 500});
   }
 };
@@ -129,7 +173,7 @@ exports.loginWithPhoneOtp = async (req, res, next) => {
 
 exports.verifyPhoneOtp = async (req, res, next) => {
   try {
-    const { otp, phone } = req.body;
+    const { phone, otp } = req.body;
     const user = await User.findOne({phone});
     if (!user) {
       next({ status: 400, message: USER_NOT_FOUND_ERR });

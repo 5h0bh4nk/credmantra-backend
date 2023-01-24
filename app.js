@@ -4,10 +4,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require("mongoose");
+var cors = require("cors");
 
 require("dotenv").config();
 
-const { MONGODB_URI, API_INITIALS } = require("./config");
+const { MONGODB_URI, API_VERSION } = require("./config");
 const { SERVER_ERR } = require("./errors");
 
 var indexRouter = require('./routes/index');
@@ -16,15 +17,28 @@ var authRouter = require('./routes/auth');
 
 var app = express();
 
+var allowlist = ['http://localhost:4200', 'http://localhost:3000'];
+var corsOptionsDelegate = function (req, callback) {
+  var corsOptions;
+  if (allowlist.indexOf(req.header('Origin')) !== -1) {
+    corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+  } else {
+    corsOptions = { origin: false } // disable CORS for this request
+  }
+  callback(null, corsOptions) // callback expects two parameters: error and options
+}
+
+app.use(cors(corsOptionsDelegate));
+
 // view engine setup
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use(API_INITIALS + '/', indexRouter);
-app.use(API_INITIALS + '/users', usersRouter);
-app.use(API_INITIALS + '/auth', authRouter);
+app.use('/api' + API_VERSION + '/', indexRouter);
+app.use('/api' + API_VERSION + '/users', usersRouter);
+app.use('/api' + API_VERSION + '/auth', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
