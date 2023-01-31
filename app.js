@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -5,7 +7,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require("mongoose");
 var cors = require("cors");
-const rateLimit = require('express-rate-limit')
+const rateLimit = require('express-rate-limit');
 
 const apiLimiter = rateLimit({
 	windowMs: 15 * 60 * 1000, // 15 minutes
@@ -14,15 +16,14 @@ const apiLimiter = rateLimit({
 	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
 
-require("dotenv").config();
-
 const { MONGODB_URI, API_VERSION } = require("./config");
 const { SERVER_ERR } = require("./errors");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth');
-
+var googleAuthRouter = require('./routes/google_auth');
+var partnerRouter = require('./routes/partner');
 var app = express();
 
 var allowlist = ['http://localhost:4200', 'http://localhost:3000'];
@@ -48,6 +49,8 @@ app.use(cookieParser());
 app.use('/api' + API_VERSION + '/', indexRouter);
 app.use('/api' + API_VERSION + '/users', usersRouter);
 app.use('/api' + API_VERSION + '/auth', authRouter);
+app.use('/api' + API_VERSION + '/auth/google', googleAuthRouter);
+app.use('/api' + API_VERSION + '/partner', partnerRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

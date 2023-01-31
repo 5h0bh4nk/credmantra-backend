@@ -2,17 +2,16 @@ const { model, Schema } = require("mongoose");
 
 const userSchema = new Schema(
   {
-    // name: {
-    //   type: String,
-    //   required: false,
-    //   trim: true,
-    // },
-
+    name: {
+      type: String,
+      required: false,
+      trim: true,
+    },
     phone: {
       type: String,
       required: true,
       trim: true,
-      unique: true,
+      // unique: true,
     },
 
     role :{
@@ -33,7 +32,18 @@ const userSchema = new Schema(
     detailsFilled:{
         type:Boolean,
         default:false,
-    }
+    },
+    google: {
+      id: {
+        type: String,
+      },
+      email: {
+        type: String,
+      },
+      name: {
+        type: String,
+      },
+    },
   },
   { timestamps: true }
 );

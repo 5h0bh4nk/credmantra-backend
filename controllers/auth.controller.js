@@ -174,7 +174,9 @@ exports.resendOtp = async (req, res, next) => {
 exports.verifyPhoneOtp = async (req, res, next) => {
   try {
     const { phone, otp } = req.body;
+    
     const user = await User.findOne({phone});
+    console.log(user, phone, otp);
     if (!user) {
       next({ status: 400, message: USER_NOT_FOUND_ERR });
       return;
