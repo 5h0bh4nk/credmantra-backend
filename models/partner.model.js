@@ -9,6 +9,7 @@ const partnerSchema = new Schema(
         },
         type: {
             type: String,
+            enum: ["MicroLoan", "PayLater"],
             required: true,
         },
         apiLink: {
