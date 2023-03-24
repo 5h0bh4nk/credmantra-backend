@@ -33,6 +33,12 @@ const userSchema = new Schema(
         type:Boolean,
         default:false,
     },
+    applications: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Application",
+      },
+    ],
     google: {
       id: {
         type: String,

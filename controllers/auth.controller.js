@@ -53,6 +53,10 @@ exports.createNewUser = async (req, res, next) => {
       next
     );
 
+    if(res.headersSent){
+      return;
+    }
+
     res.status(200).json({
       type: "success",
       message: "Account created OTP sent to mobile number",
@@ -73,6 +77,7 @@ exports.get_auth = async (req, res, next) => {
     const { phone } = req.body;
 
     const user = await User.findOne({phone});
+    console.log(user);
     if (!user) {
       // create new user
       await this.createNewUser(req, res, next);
@@ -117,6 +122,10 @@ exports.loginWithPhoneOtp = async (req, res, next) => {
       next
     );
 
+    if(res.headersSent){
+      return;
+    }
+
     res.status(201).json({
       type: "success",
       message: "OTP sent to your registered phone number",
@@ -141,6 +150,7 @@ exports.resendOtp = async (req, res, next) => {
       next({ status: 400, message: PHONE_NOT_FOUND_ERR });
       return;
     }
+    console.log(user);
 
     // generate otp
     const otp = generateOTP(OTP_LENGTH);
@@ -165,7 +175,7 @@ exports.resendOtp = async (req, res, next) => {
       },
     });
   } catch (error) {
-    next({message: error.message, status: 500});
+    next({message: error.message, status: error.status});
   }
 };
 

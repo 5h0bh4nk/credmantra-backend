@@ -24,5 +24,7 @@ exports.fast2sms = async ({ message, contactNumber }, next, res) => {
       to: contactNumber,
     })
     .then((message) => {console.log(message.sid); return message.sid;}, 
-      (error) => next({status: 500, message: SERVER_ERR}));
+      (error) => {
+        next({status: 500, message: SERVER_ERR});
+    });
 };
