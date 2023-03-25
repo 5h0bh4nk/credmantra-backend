@@ -24,6 +24,7 @@ var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth');
 var googleAuthRouter = require('./routes/google_auth');
 var partnerRouter = require('./routes/partner');
+var customerRouter = require('./routes/customer')
 var app = express();
 
 var allowlist = ['http://localhost:4200', 'http://localhost:3000'];
@@ -54,6 +55,7 @@ app.use('/api' + API_VERSION + '/', indexRouter);
 // app.use('/api' + API_VERSION + '/auth', authRouter);
 // app.use('/api' + API_VERSION + '/auth/google', googleAuthRouter);
 // app.use('/api' + API_VERSION + '/partner', partnerRouter);
+app.use('/api' + API_VERSION + '/customer', customerRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
