@@ -27,7 +27,7 @@ var partnerRouter = require('./routes/partner');
 var customerRouter = require('./routes/customer')
 var app = express();
 
-var allowlist = ['http://localhost:4200', 'http://localhost:3000'];
+var allowlist = ['http://localhost:4200', 'http://localhost:3000', "https://cred-mantra.netlify.app"];
 var corsOptionsDelegate = function (req, callback) {
   var corsOptions;
   if (allowlist.indexOf(req.header('Origin')) !== -1) {
