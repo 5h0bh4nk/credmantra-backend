@@ -7,14 +7,41 @@ const QuerySchema = new Schema({
     },
     email: {
         type: String,
-        required: true
     },
-    phone: {
+    mobile: {
         type: String,
         required: true
     },
     message: {
         type: String,
+    },
+    occupation: {
+        type: String
+    },
+    pan: {
+        type: String,
+        minlength: 10,
+        maxLength: 10
+    },
+    pincode: {
+        type: String,
+        minlength: 6,
+        maxLength: 6
+    },
+    income: {
+        type: String
+    },
+    product: {
+        type: String
+    },
+    dob: {
+        type: String
+    },
+    itr: {
+        type: String
+    },
+    gst: {
+        type: String
     }
 });
 

@@ -26,6 +26,7 @@ var googleAuthRouter = require('./routes/google_auth');
 var partnerRouter = require('./routes/partner');
 var customerRouter = require('./routes/customer')
 var app = express();
+var applicationRouter = require('./routes/application')
 
 var allowlist = ['http://localhost:4200', 'http://localhost:3000', "https://cred-mantra.netlify.app"];
 var corsOptionsDelegate = function (req, callback) {
@@ -52,10 +53,11 @@ app.use(cookieParser());
 
 app.use('/api' + API_VERSION + '/', indexRouter);
 // app.use('/api' + API_VERSION + '/users', usersRouter);
-// app.use('/api' + API_VERSION + '/auth', authRouter);
+app.use('/api' + API_VERSION + '/auth', authRouter);
 // app.use('/api' + API_VERSION + '/auth/google', googleAuthRouter);
-// app.use('/api' + API_VERSION + '/partner', partnerRouter);
+app.use('/api' + API_VERSION + '/partner', partnerRouter);
 app.use('/api' + API_VERSION + '/customer', customerRouter);
+app.use('/api' + API_VERSION + '/application', applicationRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

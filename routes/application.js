@@ -50,3 +50,4 @@ router.post("/create", checkAuth, async () => {
     }
 });
 
+module.exports = router
