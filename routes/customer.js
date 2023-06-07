@@ -4,6 +4,14 @@ const Customer = require("../models/customer.model");
 const Query = require("../models/query.model");
 
 // create appication
+
+router.get('/', async (req, res, next)=>{
+    res.status(200).json({
+        type: "success",
+        message: "Auth service running",
+      }); 
+})
+
 router.post("/create", async (req, res, next) => {
     try{
         const application = await Customer.create(req.body);
